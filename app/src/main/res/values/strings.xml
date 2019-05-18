@@ -11,5 +11,7 @@
     <string name="login_unauthorized">Usuário ou senha inválidos</string>
     <string name="title_signup">Cadastre-se</string>
     <string name="btn_register">Cadastrar</string>
+    <string name="msg_register_success">Cadastro efetuado com sucesso.</string>
+
     <string name="api_fail">Ops! Estamos com problemas, tente novamente mais tarde.</string>
 </resources>
