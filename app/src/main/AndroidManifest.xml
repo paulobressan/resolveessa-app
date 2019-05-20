@@ -10,8 +10,13 @@
             android:label="@string/app_name"
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
-        <activity android:name=".user.signup.SignupActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/AppTheme"
+            android:usesCleartextTraffic="true">
+        <activity android:name=".problem.ProblemsActivity">
+        </activity>
+        <activity
+                android:name=".user.signup.SignupActivity"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
         <activity android:name=".home.HomeActivity">
         </activity>

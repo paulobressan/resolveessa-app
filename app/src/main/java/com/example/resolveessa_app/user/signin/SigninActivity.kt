@@ -10,7 +10,7 @@ import com.example.resolveessa_app.home.HomeActivity
 import com.example.resolveessa_app.user.signin.dto.SigninReturnDTO
 import com.example.resolveessa_app.user.signin.dto.SigninSendDTO
 import com.example.resolveessa_app.user.signup.SignupActivity
-import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_signin.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,7 +19,7 @@ class SigninActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_signin)
         btnSigin.setOnClickListener {
             Network.sign(SigninSendDTO(txtName.text.toString(), txtPassword.text.toString()))
                 .enqueue(object : Callback<SigninReturnDTO> {
@@ -27,6 +27,7 @@ class SigninActivity : AppCompatActivity() {
                         call: Call<SigninReturnDTO>,
                         response: Response<SigninReturnDTO>
                     ) {
+                        val error = response.errorBody()
                         if (response.isSuccessful) {
                             Toast.makeText(applicationContext, getText(R.string.login_authorized), Toast.LENGTH_SHORT)
                                 .show()
@@ -34,7 +35,7 @@ class SigninActivity : AppCompatActivity() {
                         } else {
                             Toast.makeText(
                                 applicationContext,
-                                getString(R.string.login_unauthorized),
+                                error?.string() ?: getString(R.string.login_unauthorized),
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
