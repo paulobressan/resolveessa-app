@@ -3,10 +3,12 @@ package com.example.resolveessa_app.problem
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.example.resolveessa_app.BaseResponseDTO
 import com.example.resolveessa_app.Network
 import com.example.resolveessa_app.R
 import com.example.resolveessa_app.home.HomeActivity
 import com.example.resolveessa_app.problem.dto.ProblemReturnDTO
+import com.example.resolveessa_app.problem.info_problem.InfoProblemActivity
 import kotlinx.android.synthetic.main.activity_problems.*
 import net.idik.lib.slimadapter.SlimAdapter
 import net.idik.lib.slimadapter.SlimInjector
@@ -19,10 +21,12 @@ class ProblemsActivity : AppCompatActivity() {
         SlimAdapter.create()
             .register(R.layout.item_problem,
                 SlimInjector<ProblemReturnDTO> { data, injector ->
-                    injector.text(R.id.txtSubCategory, data.subCategory.name)
+                    injector.text(R.id.txtSubCategory, data.subCategory)
                     injector.text(R.id.txtObservation, data.observation)
                     injector.clicked(R.id.btnInfo) {
-                        startActivity(Intent(applicationContext, HomeActivity::class.java))
+                        val intent = Intent(applicationContext, InfoProblemActivity::class.java)
+                        intent.putExtra("id", data.id)
+                        startActivity(intent)
                     }
                 }).attachTo(recyclerView)
     }
@@ -31,15 +35,15 @@ class ProblemsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_problems)
         Network.getProblems()
-            .enqueue(object : Callback<List<ProblemReturnDTO>> {
+            .enqueue(object : Callback<BaseResponseDTO<ProblemReturnDTO>> {
                 override fun onResponse(
-                    call: Call<List<ProblemReturnDTO>>, response: Response<List<ProblemReturnDTO>>
+                    call: Call<BaseResponseDTO<ProblemReturnDTO>>, response: Response<BaseResponseDTO<ProblemReturnDTO>>
                 ) {
-                    System.out.print("Teste")
+                    slimAdapter.updateData(response.body()?.items)
                 }
 
-                override fun onFailure(call: Call<List<ProblemReturnDTO>>, t: Throwable) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                override fun onFailure(call: Call<BaseResponseDTO<ProblemReturnDTO>>, t: Throwable) {
+                    System.out.print("Erro" + t.message)
                 }
             })
         //slimAdapter.updateData()

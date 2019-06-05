@@ -22,7 +22,7 @@ object Network {
         return getRetrofit().create(UserAPI::class.java).signup(signupSendDTO)
     }
 
-    fun getProblems(): Call<List<ProblemReturnDTO>> {
+    fun getProblems(): Call<BaseResponseDTO<ProblemReturnDTO>> {
         return getRetrofit().create(ProblemAPI::class.java).getProblems()
     }
 

@@ -1,11 +1,12 @@
 package com.example.resolveessa_app.problem.dto
 
-import com.example.resolveessa_app.category.SubCategoryModel
-import com.example.resolveessa_app.user.UserModel
+import com.google.gson.annotations.SerializedName
 
 data class ProblemReturnDTO(
-    val user: UserModel,
-    val subCategory: SubCategoryModel,
+    @SerializedName("_id")
+    val id: String,
+    val user: String,
+    val subCategory: String,
     val observation: String,
     val latitude: String,
     val longitude: String
