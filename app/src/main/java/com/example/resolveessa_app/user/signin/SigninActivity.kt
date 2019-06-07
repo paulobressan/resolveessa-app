@@ -10,6 +10,7 @@ import com.example.resolveessa_app.home.HomeActivity
 import com.example.resolveessa_app.user.signin.dto.SigninReturnDTO
 import com.example.resolveessa_app.user.signin.dto.SigninSendDTO
 import com.example.resolveessa_app.user.signup.SignupActivity
+import com.example.resolveessa_app.utils.Preferences
 import kotlinx.android.synthetic.main.activity_signin.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,6 +32,7 @@ class SigninActivity : AppCompatActivity() {
                         if (response.isSuccessful) {
                             Toast.makeText(applicationContext, getText(R.string.login_authorized), Toast.LENGTH_SHORT)
                                 .show()
+                            Preferences.getInstance(applicationContext).token = response.body()!!.accessToken
                             startActivity(Intent(applicationContext, HomeActivity::class.java))
                         } else {
                             Toast.makeText(
@@ -53,6 +55,11 @@ class SigninActivity : AppCompatActivity() {
 
         btnSigup.setOnClickListener {
             startActivity(Intent(this, SignupActivity::class.java))
+        }
+
+        if (Preferences.getInstance(this).isExistToken){
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
         }
     }
 }

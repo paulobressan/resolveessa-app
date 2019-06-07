@@ -12,9 +12,11 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-        <activity android:name=".problem.info_problem.InfoProblemActivity">
+        <activity android:name=".problem.create_problem.CreateProblemActivity" android:label="Adicionar Problema">
         </activity>
-        <activity android:name=".problem.ProblemsActivity">
+        <activity android:name=".problem.info_problem.InfoProblemActivity" android:label="Problema">
+        </activity>
+        <activity android:name=".problem.ProblemsActivity" android:label="Lista de Problemas">
         </activity>
         <activity
                 android:name=".user.signup.SignupActivity"
